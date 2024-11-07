@@ -282,12 +282,12 @@ export default function CreateTweet() {
                               </Select>
                             </div>
                             <Input
-                              type="number"
-                              value={state.views}
-                              onChange={(e) => handleInputChange('views', e.target.value)}
-                              className="w-full"
-                              placeholder="Number of views"
-                            />
+  type="number"
+  value={state.views}
+  onChange={(e) => handleInputChange('views', e.target.value)}
+  className="w-full"
+  placeholder="Number of views"
+/>
                           </div>
                         ) : (
                           <div className="mt-2 text-sm text-gray-500">
@@ -303,20 +303,26 @@ export default function CreateTweet() {
                               {stat === "likes" && <Heart className="w-4 h-4" />}
                               {stat === "bookmarks" && <Bookmark className="w-4 h-4" />}
                               {state.activeTab === "edit" ? (
-                                <Input
-                                  type="number"
-                                  value={
-                                    typeof state[stat as keyof typeof state] === 'number' || typeof state[stat as keyof typeof state] === 'string'
-                                      ? state[stat as keyof typeof state]
-                                      : 0 // لو كانت القيمة مش رقمية أو نصية، هنحط 0
-                                  }
-                                  onChange={(e) => handleInputChange(stat, e.target.value)}
-                                  className="w-12 sm:w-16 text-center"
-                                  placeholder="0"
-                                />
-                              ) : (
-                                <span>{formatNumber(Number(state[stat as keyof typeof state]))}</span> // نستخدم `Number` هنا عشان نضمن إن القيمة هتكون رقم
-                              )}
+                               <Input
+                               type="number"
+                               value={
+                                 // نتحقق من النوع بشكل شامل
+                                 typeof state[stat as keyof typeof state] === 'number' ||
+                                 typeof state[stat as keyof typeof state] === 'string' ||
+                                 !isNaN(Number(state[stat as keyof typeof state]))  // تحقق من أن القيمة قابلة للتحويل لرقم
+                                   ? Number(state[stat as keyof typeof state]) // تحويل القيمة لرقم
+                                   : 0 // لو القيمة مش رقم، خليها 0
+                               }
+                               onChange={(e) => handleInputChange(stat, e.target.value)}
+                               className="w-12 sm:w-16 text-center"
+                               placeholder="0"
+                             />
+                              
+
+) : (
+  <span>{formatNumber(Number(state[stat as keyof typeof state]))}</span> // نستخدم `Number` هنا عشان نضمن إن القيمة هتكون رقم
+)}
+
 
                             </div>
                           ))}
