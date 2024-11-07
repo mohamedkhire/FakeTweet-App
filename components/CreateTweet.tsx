@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { MessageCircle, Repeat2, Heart, Bookmark, Upload, ChevronDown,  CalendarIcon, ArrowLeft, Moon, Sun, Camera, ImagePlus, BarChart2, X } from "lucide-react"
+import { MessageCircle, Repeat2, Heart, Bookmark, Upload, ChevronDown, CalendarIcon, ArrowLeft, Moon, Sun, Camera, ImagePlus, BarChart2, X } from "lucide-react"
 import Image from "next/image"
 import { toPng } from 'html-to-image'
 import { format } from "date-fns"
@@ -68,7 +68,7 @@ const initialState = {
 const backgroundPresets = [
   { name: "Dark", value: "linear-gradient(to bottom, #111827, #1F2937)" },
   { name: "Purple", value: "linear-gradient(to bottom right, #4F46E5, #7C3AED)" },
-  { name: "Blue", value: "linear-gradient(to bottom right, #2563EB, #3B82F6)" },  
+  { name: "Blue", value: "linear-gradient(to bottom right, #2563EB, #3B82F6)" },
   { name: "Light", value: "linear-gradient(to bottom, #F3F4F6, #E5E7EB)" },
 ]
 
@@ -179,547 +179,548 @@ export default function TweetCreator() {
   return (
     <>
       <Head>
-        <title>Fake Tweet - Create Custom Tweets</title>
-        <meta name="description" content="Create and share custom fake tweets for mockups, presentations, or fun!" />
-        <meta name="keywords" content="fake tweet, custom tweet, tweet generator, social media mockup" />
-        <meta name="author" content="Mohamed Khire" />
-        <meta property="og:title" content="Fake Tweet - Create Custom Tweets" />
-        <meta property="og:description" content="Design and share custom tweets effortlessly. Perfect for mockups, presentations, or just for fun!" />
-        <meta property="og:image" content="URL_of_image_to_represent_the_page" />
-        <meta property="og:url" content="https://yourwebsite.com" />
+        <title>Fake Tweet App - Create Realistic Fake Tweets Easily</title>
+        <meta name="title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta name="description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Fake Tweet - Create Custom Tweets" />
-        <meta name="twitter:description" content="Design and share custom tweets effortlessly. Perfect for mockups, presentations, or just for fun!" />
-        <meta name="twitter:image" content="URL_of_image_to_represent_the_page" />
+        <meta property="og:url" content="https://fake-tweet-app.vercel.app/" />
+        <meta property="og:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta property="og:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+        <meta property="og:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://fake-tweet-app.vercel.app/" />
+        <meta property="twitter:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta property="twitter:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+        <meta property="twitter:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
       </Head>
 
-    <div className={`min-h-screen flex flex-col`}>
-      <header className="bg-white border-b">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <span className="ml-2 text-2xl font-bold text-dark-600">Fake Tweet</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="hidden sm:inline-flex items-center">
-                    Product
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-80">
-                  <div className="flex items-start space-x-3 p-2">
-                    <div className="rounded-full bg-dark-100 p-2">
-                      <MessageCircle className="h-5 w-5 text-dark-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Fake Tweet</h3>
-                      <p className="text-sm text-muted-foreground">Create your own fake tweet with just a snap of finger</p>
-                    </div>
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <a href="https://mohamedkhire.vercel.app/"><Button variant="outline">Contact</Button></a>
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      <main className="flex-grow bg-background">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-center mb-8">
-            Create Your <span className="text-primary">Tweet</span>
-          </h1>
-
-          <Tabs value={state.activeTab} onValueChange={(value) => handleInputChange('activeTab', value)} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="edit">Edit Tweet ✨</TabsTrigger>
-              <TabsTrigger value="preview">Preview</TabsTrigger>
-            </TabsList>
-
-            <div className="mt-4">
-              <div
-                ref={exportRef}
-                className="rounded-xl p-4 sm:p-8 md:p-16 relative overflow-hidden"
-                style={{
-                  maxWidth: '600px',
-                  margin: '0 auto'
-                }}
-              >
-                {state.showBackground && (
-                  <div className="absolute inset-0" style={getBackgroundStyle()} />
-                )}
-                <Card className={`shadow-xl relative z-10 ${state.isDarkMode ? 'bg-gray-900 text-white' : 'bg-white'}`}>
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex space-x-3">
-                      <div className="flex-shrink-0">
-                        <div className="relative">
-                          <Label htmlFor="user-photo" className="cursor-pointer">
-                            <Avatar className="w-12 h-12 hover:opacity-80 transition-opacity">
-                              {state.userPhoto ? (
-                                <AvatarImage src={state.userPhoto} alt="User avatar" />
-                              ) : (
-                                <AvatarFallback className="bg-muted flex items-center justify-center">
-                                  <Camera className="w-6 h-6 text-muted-foreground" />
-                                </AvatarFallback>
-                              )}
-                            </Avatar>
-                            <Input id="user-photo" type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'userPhoto')} className="hidden" />
-                          </Label>
-                        </div>
+      <div className={`min-h-screen flex flex-col`}>
+        <header className="bg-white border-b">
+          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center">
+                <span className="ml-2 text-2xl font-bold text-dark-600">Fake Tweet</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="hidden sm:inline-flex items-center">
+                      Product
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-80">
+                    <div className="flex items-start space-x-3 p-2">
+                      <div className="rounded-full bg-dark-100 p-2">
+                        <MessageCircle className="h-5 w-5 text-dark-600" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2">
-                          {state.activeTab === "edit" ? (
-                            <div className="space-y-2">
-                              <div className="flex items-center space-x-2">
+                      <div>
+                        <h3 className="font-semibold">Fake Tweet</h3>
+                        <p className="text-sm text-muted-foreground">Create your own fake tweet with just a snap of finger</p>
+                      </div>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <a href="https://mohamedkhire.vercel.app/"><Button variant="outline">Contact</Button></a>
+              </div>
+            </div>
+          </nav>
+        </header>
+
+        <main className="flex-grow bg-background">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 className="text-3xl font-bold text-center mb-8">
+              Create Your <span className="text-primary">Tweet</span>
+            </h1>
+
+            <Tabs value={state.activeTab} onValueChange={(value) => handleInputChange('activeTab', value)} className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="edit">Edit Tweet ✨</TabsTrigger>
+                <TabsTrigger value="preview">Preview</TabsTrigger>
+              </TabsList>
+
+              <div className="mt-4">
+                <div
+                  ref={exportRef}
+                  className="rounded-xl p-4 sm:p-8 md:p-16 relative overflow-hidden"
+                  style={{
+                    maxWidth: '600px',
+                    margin: '0 auto'
+                  }}
+                >
+                  {state.showBackground && (
+                    <div className="absolute inset-0" style={getBackgroundStyle()} />
+                  )}
+                  <Card className={`shadow-xl relative z-10 ${state.isDarkMode ? 'bg-gray-900 text-white' : 'bg-white'}`}>
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="flex space-x-3">
+                        <div className="flex-shrink-0">
+                          <div className="relative">
+                            <Label htmlFor="user-photo" className="cursor-pointer">
+                              <Avatar className="w-12 h-12 hover:opacity-80 transition-opacity">
+                                {state.userPhoto ? (
+                                  <AvatarImage src={state.userPhoto} alt="User avatar" />
+                                ) : (
+                                  <AvatarFallback className="bg-muted flex items-center justify-center">
+                                    <Camera className="w-6 h-6 text-muted-foreground" />
+                                  </AvatarFallback>
+                                )}
+                              </Avatar>
+                              <Input id="user-photo" type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'userPhoto')} className="hidden" />
+                            </Label>
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center space-x-2">
+                            {state.activeTab === "edit" ? (
+                              <div className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                  <Input
+                                    value={state.name}
+                                    onChange={(e) => handleInputChange('name', e.target.value)}
+                                    className="font-bold text-lg"
+                                    placeholder="Your name"
+                                  />
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                                        <VerificationBadge className={`h-5 w-5 ${state.verificationStatus === 'none' ? 'text-muted-foreground' :
+                                            state.verificationStatus === 'blue' ? 'text-blue-500' :
+                                              'text-yellow-500'
+                                          }`} />
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-40">
+                                      <div className="grid gap-2">
+                                        <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'none')}>
+                                          <VerificationBadge className="h-4 w-4 text-muted-foreground mr-2" /> No Tick
+                                        </Button>
+                                        <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'blue')}>
+                                          <VerificationBadge className="h-4 w-4 text-blue-500 mr-2" /> Blue Tick
+                                        </Button>
+                                        <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'gold')}>
+                                          <VerificationBadge className="h-4 w-4 text-yellow-500 mr-2" /> Gold Tick
+                                        </Button>
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
+                                </div>
                                 <Input
-                                  value={state.name}
-                                  onChange={(e) => handleInputChange('name', e.target.value)}
-                                  className="font-bold text-lg"
-                                  placeholder="Your name"
+                                  value={state.username}
+                                  onChange={(e) => handleInputChange('username', e.target.value)}
+                                  className="text-muted-foreground"
+                                  placeholder="Your username"
                                 />
+                              </div>
+                            ) : (
+                              <div className="flex flex-col">
+                                <div className="flex items-center space-x-1">
+                                  <span className="font-bold text-lg">{state.name || "Your name"}</span>
+                                  {state.verificationStatus !== 'none' && (
+                                    <VerificationBadge className={`h-5 w-5 ${state.verificationStatus === 'blue' ? 'text-blue-500' : 'text-yellow-500'}`} />
+                                  )}
+                                </div>
+                                <span className="text-sm text-muted-foreground">@{state.username || 'username'}</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="mt-2">
+                            {state.activeTab === "edit" ? (
+                              <Textarea
+                                className="w-full mt-2 bg-transparent resize-none focus:outline-none overflow-hidden"
+                                value={state.tweetText}
+                                onChange={(e) => {
+                                  handleInputChange('tweetText', e.target.value);
+                                  e.target.style.height = 'auto';
+                                  e.target.style.height = `${e.target.scrollHeight}px`;
+                                }}
+                                rows={3}
+                                placeholder="What's happening?"
+                              />
+                            ) : (
+                              <p className="mt-2 break-words">{state.tweetText || "What's happening?"}</p>
+                            )}
+                          </div>
+
+                          <div className="mt-3 rounded-xl overflow-hidden relative">
+                            {state.tweetPhoto ? (
+                              <div className="relative">
+                                <Image
+                                  src={state.tweetPhoto}
+                                  alt="Tweet image"
+                                  width={500}
+                                  height={300}
+                                  layout="responsive"
+                                  objectFit="cover"
+                                />
+                                {state.activeTab === "edit" && (
+                                  <Button
+                                    variant="secondary"
+                                    size="icon"
+                                    className="absolute top-2 right-2 bg-black/50 hover:bg-black/70"
+                                    onClick={() => handleInputChange('tweetPhoto', '')}
+                                  >
+                                    <X className="h-4 w-4 text-white" />
+                                  </Button>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="w-full h-48 bg-muted flex items-center justify-center">
+                                {state.activeTab === "edit" ? (
+                                  <Label htmlFor="tweet-photo" className="cursor-pointer flex flex-col items-center">
+                                    <ImagePlus className="w-12 h-12 text-muted-foreground mb-2" />
+                                    <span className="text-muted-foreground">Click to upload an image</span>
+                                    <Input id="tweet-photo" type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'tweetPhoto')} className="hidden" />
+                                  </Label>
+                                ) : (
+                                  <span className="text-muted-foreground">No image uploaded</span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="mt-4 flex items-center justify-between text-muted-foreground text-sm">
+                            <div className="flex items-center space-x-4">
+                              {state.activeTab === "edit" ? (
                                 <Popover>
                                   <PopoverTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                                      <VerificationBadge className={`h-5 w-5 ${
-                                        state.verificationStatus === 'none' ? 'text-muted-foreground' :
-                                        state.verificationStatus === 'blue' ? 'text-blue-500' :
-                                        'text-yellow-500'
-                                      }`} />
+                                    <Button variant="outline" className="text-xs">
+                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      {formattedDateTime}
                                     </Button>
                                   </PopoverTrigger>
-                                  <PopoverContent className="w-40">
-                                    <div className="grid gap-2">
-                                      <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'none')}>
-                                        <VerificationBadge className="h-4 w-4 text-muted-foreground mr-2" /> No Tick
-                                      </Button>
-                                      <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'blue')}>
-                                        <VerificationBadge className="h-4 w-4 text-blue-500 mr-2" /> Blue Tick
-                                      </Button>
-                                      <Button variant="ghost" className="justify-start" onClick={() => handleInputChange('verificationStatus', 'gold')}>
-                                        <VerificationBadge className="h-4 w-4 text-yellow-500 mr-2" /> Gold Tick
-                                      </Button>
+                                  <PopoverContent className="w-auto p-0">
+                                    <Calendar
+                                      mode="single"
+                                      selected={state.date}
+                                      onSelect={(date) => {
+                                        if (date) {
+                                          const newDate = new Date(date)
+                                          newDate.setHours(parseInt(state.time.hour))
+                                          newDate.setMinutes(parseInt(state.time.minute))
+                                          handleDateTimeChange(newDate)
+                                        }
+                                      }}
+                                      initialFocus
+                                    />
+                                    <div className="border-t p-3 flex justify-between">
+                                      <Select
+                                        value={state.time.hour}
+                                        onValueChange={(value) => {
+                                          const newDate = new Date(state.date)
+                                          newDate.setHours(parseInt(value))
+                                          handleDateTimeChange(newDate)
+                                        }}
+                                      >
+                                        <SelectTrigger className="w-[70px]">
+                                          <SelectValue placeholder="Hour" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                                            <SelectItem key={hour} value={hour.toString().padStart(2, '0')}>
+                                              {hour.toString().padStart(2, '0')}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                      <Select
+                                        value={state.time.minute}
+                                        onValueChange={(value) => {
+                                          const newDate = new Date(state.date)
+                                          newDate.setMinutes(parseInt(value))
+                                          handleDateTimeChange(newDate)
+                                        }}
+                                      >
+                                        <SelectTrigger className="w-[70px]">
+                                          <SelectValue placeholder="Minute" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                                            <SelectItem key={minute} value={minute.toString().padStart(2, '0')}>
+                                              {minute.toString().padStart(2, '0')}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                      <Select
+                                        value={state.time.period}
+                                        onValueChange={(value) => {
+                                          const newDate = new Date(state.date)
+                                          const currentHours = newDate.getHours()
+                                          const newHours = value === 'PM' ? (currentHours % 12) + 12 : currentHours % 12
+                                          newDate.setHours(newHours)
+                                          handleDateTimeChange(newDate)
+                                        }}
+                                      >
+                                        <SelectTrigger className="w-[70px]">
+                                          <SelectValue placeholder="AM/PM" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="AM">AM</SelectItem>
+                                          <SelectItem value="PM">PM</SelectItem>
+                                        </SelectContent>
+                                      </Select>
                                     </div>
                                   </PopoverContent>
                                 </Popover>
-                              </div>
-                              <Input
-                                value={state.username}
-                                onChange={(e) => handleInputChange('username', e.target.value)}
-                                className="text-muted-foreground"
-                                placeholder="Your username"
-                              />
+                              ) : (
+                                <div className="text-xs">
+                                  <CalendarIcon className="inline-block mr-2 h-4 w-4" />
+                                  {formattedDateTime}
+                                </div>
+                              )}
+                              {state.activeTab === "edit" ? (
+                                <div className="flex items-center space-x-2">
+                                  <Input
+                                    type="number"
+                                    value={state.views}
+                                    onChange={(e) => handleInputChange('views', parseInt(e.target.value) || 0)}
+                                    className="w-20 text-center"
+                                  />
+                                  <span>Views</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center space-x-1">
+                                  <BarChart2 className="w-4 h-4" />
+                                  <span>{formatNumber(state.views)} Views</span>
+                                </div>
+                              )}
                             </div>
-                          ) : (
-                            <div className="flex flex-col">
-                              <div className="flex items-center space-x-1">
-                                <span className="font-bold text-lg">{state.name || "Your name"}</span>
-                                {state.verificationStatus !== 'none' && (
-                                  <VerificationBadge className={`h-5 w-5 ${state.verificationStatus === 'blue' ? 'text-blue-500' : 'text-yellow-500'}`} />
+                          </div>
+
+                          <div className="mt-4 flex justify-between items-center text-muted-foreground">
+                            {['replies', 'retweets', 'likes', 'bookmarks'].map((stat) => (
+                              <div key={stat} className="flex items-center space-x-1">
+                                {stat === "replies" && <MessageCircle className="w-4 h-4" />}
+                                {stat === "retweets" && <Repeat2 className="w-4 h-4" />}
+                                {stat === "likes" && <Heart className="w-4 h-4" />}
+                                {stat === "bookmarks" && <Bookmark className="w-4 h-4" />}
+                                {state.activeTab === "edit" ? (
+                                  <Input
+                                    type="number"
+                                    value={state[stat as keyof typeof state] as number}
+                                    onChange={(e) => handleInputChange(stat, parseInt(e.target.value) || 0)}
+                                    className="w-16 text-center"
+                                    placeholder={`${stat.charAt(0).toUpperCase() + stat.slice(1)}`}
+                                  />
+                                ) : (
+                                  <span>{formatNumber(state[stat as keyof typeof state] as number)}</span>
                                 )}
                               </div>
-                              <span className="text-sm text-muted-foreground">@{state.username || 'username'}</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="mt-2">
-                          {state.activeTab === "edit" ? (
-                            <Textarea
-                              className="w-full mt-2 bg-transparent resize-none focus:outline-none overflow-hidden"
-                              value={state.tweetText}
-                              onChange={(e) => {
-                                handleInputChange('tweetText', e.target.value);
-                                e.target.style.height = 'auto';
-                                e.target.style.height = `${e.target.scrollHeight}px`;
-                              }}
-                              rows={3}
-                              placeholder="What's happening?"
-                            />
-                          ) : (
-                            <p className="mt-2 break-words">{state.tweetText || "What's happening?"}</p>
-                          )}
-                        </div>
-
-                        <div className="mt-3 rounded-xl overflow-hidden relative">
-                          {state.tweetPhoto ? (
-                            <div className="relative">
-                              <Image
-                                src={state.tweetPhoto}
-                                alt="Tweet image"
-                                width={500}
-                                height={300}
-                                layout="responsive"
-                                objectFit="cover"
-                              />
-                              {state.activeTab === "edit" && (
-                                <Button
-                                  variant="secondary"
-                                  size="icon"
-                                  className="absolute top-2 right-2 bg-black/50 hover:bg-black/70"
-                                  onClick={() => handleInputChange('tweetPhoto', '')}
-                                >
-                                  <X className="h-4 w-4 text-white" />
-                                </Button>
-                              )}
-                            </div>
-                          ) : (
-                            <div className="w-full h-48 bg-muted flex items-center justify-center">
-                              {state.activeTab === "edit" ? (
-                                <Label htmlFor="tweet-photo" className="cursor-pointer flex flex-col items-center">
-                                  <ImagePlus className="w-12 h-12 text-muted-foreground mb-2" />
-                                  <span className="text-muted-foreground">Click to upload an image</span>
-                                  <Input id="tweet-photo" type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'tweetPhoto')} className="hidden" />
-                                </Label>
-                              ) : (
-                                <span className="text-muted-foreground">No image uploaded</span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="mt-4 flex items-center justify-between text-muted-foreground text-sm">
-                          <div className="flex items-center space-x-4">
-                            {state.activeTab === "edit" ? (
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <Button variant="outline" className="text-xs">
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {formattedDateTime}
-                                  </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0">
-                                  <Calendar
-                                    mode="single"
-                                    selected={state.date}
-                                    onSelect={(date) => {
-                                      if (date) {
-                                        const newDate = new Date(date)
-                                        newDate.setHours(parseInt(state.time.hour))
-                                        newDate.setMinutes(parseInt(state.time.minute))
-                                        handleDateTimeChange(newDate)
-                                      }
-                                    }}
-                                    initialFocus
-                                  />
-                                  <div className="border-t p-3 flex justify-between">
-                                    <Select
-                                      value={state.time.hour}
-                                      onValueChange={(value) => {
-                                        const newDate = new Date(state.date)
-                                        newDate.setHours(parseInt(value))
-                                        handleDateTimeChange(newDate)
-                                      }}
-                                    >
-                                      <SelectTrigger className="w-[70px]">
-                                        <SelectValue placeholder="Hour" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-                                          <SelectItem key={hour} value={hour.toString().padStart(2, '0')}>
-                                            {hour.toString().padStart(2, '0')}
-                                          </SelectItem>
-                                        ))}
-                                      </SelectContent>
-                                    </Select>
-                                    <Select
-                                      value={state.time.minute}
-                                      onValueChange={(value) => {
-                                        const newDate = new Date(state.date)
-                                        newDate.setMinutes(parseInt(value))
-                                        handleDateTimeChange(newDate)
-                                      }}
-                                    >
-                                      <SelectTrigger className="w-[70px]">
-                                        <SelectValue placeholder="Minute" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-                                          <SelectItem key={minute} value={minute.toString().padStart(2, '0')}>
-                                            {minute.toString().padStart(2, '0')}
-                                          </SelectItem>
-                                        ))}
-                                      </SelectContent>
-                                    </Select>
-                                    <Select
-                                      value={state.time.period}
-                                      onValueChange={(value) => {
-                                        const newDate = new Date(state.date)
-                                        const currentHours = newDate.getHours()
-                                        const newHours = value === 'PM' ? (currentHours % 12) + 12 : currentHours % 12
-                                        newDate.setHours(newHours)
-                                        handleDateTimeChange(newDate)
-                                      }}
-                                    >
-                                      <SelectTrigger className="w-[70px]">
-                                        <SelectValue placeholder="AM/PM" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="AM">AM</SelectItem>
-                                        <SelectItem value="PM">PM</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  </div>
-                                </PopoverContent>
-                              </Popover>
-                            ) : (
-                              <div className="text-xs">
-                                <CalendarIcon className="inline-block mr-2 h-4 w-4" />
-                                {formattedDateTime}
-                              </div>
-                            )}
-                            {state.activeTab === "edit" ? (
-                              <div className="flex items-center space-x-2">
-                                <Input
-                                  type="number"
-                                  value={state.views}
-                                  onChange={(e) => handleInputChange('views', parseInt(e.target.value) || 0)}
-                                  className="w-20 text-center"
-                                />
-                                <span>Views</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center space-x-1">
-                                <BarChart2 className="w-4 h-4" />
-                                <span>{formatNumber(state.views)} Views</span>
-                              </div>
-                            )}
+                            ))}
                           </div>
-                        </div>
-
-                        <div className="mt-4 flex justify-between items-center text-muted-foreground">
-                          {['replies', 'retweets', 'likes', 'bookmarks'].map((stat) => (
-                            <div key={stat} className="flex items-center space-x-1">
-                              {stat === "replies" && <MessageCircle className="w-4 h-4" />}
-                              {stat === "retweets" && <Repeat2 className="w-4 h-4" />}
-                              {stat === "likes" && <Heart className="w-4 h-4" />}
-                              {stat === "bookmarks" && <Bookmark className="w-4 h-4" />}
-                              {state.activeTab === "edit" ? (
-                                <Input
-                                  type="number"
-                                  value={state[stat as keyof typeof state] as number}
-                                  onChange={(e) => handleInputChange(stat, parseInt(e.target.value) || 0)}
-                                  className="w-16 text-center"
-                                  placeholder={`${stat.charAt(0).toUpperCase() + stat.slice(1)}`}
-                                />
-                              ) : (
-                                <span>{formatNumber(state[stat as keyof typeof state] as number)}</span>
-                              )}
-                            </div>
-                          ))}
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
-              {state.activeTab === "preview" && (
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 space-y-4 sm:space-y-0 sm:space-x-4">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                {state.activeTab === "preview" && (
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 space-y-4 sm:space-y-0 sm:space-x-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className="flex items-center space-x-2">
+                            <div
+                              className="w-4 h-4 rounded-full"
+                              style={{ background: state.backgroundColor }}
+                            />
+                            <span>Background</span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                          <div className="grid gap-4">
+                            <div className="space-y-2">
+                              <h4 className="font-medium leading-none">Background Type</h4>
+                              <Select
+                                value={state.backgroundType}
+                                onValueChange={(value) => handleBackgroundChange('backgroundType', value)}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select background type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="preset">Preset</SelectItem>
+                                  <SelectItem value="solid">Solid Color</SelectItem>
+                                  <SelectItem value="gradient">Gradient</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            {state.backgroundType === 'preset' && (
+                              <div className="space-y-2">
+                                <h4 className="font-medium leading-none">Presets</h4>
+                                <div className="grid grid-cols-2 gap-2">
+                                  {backgroundPresets.map((preset) => (
+                                    <Button
+                                      key={preset.name}
+                                      variant="outline"
+                                      className="h-12 w-full"
+                                      style={{ background: preset.value }}
+                                      onClick={() => handleBackgroundChange('backgroundColor', preset.value)}
+                                    >
+                                      <span className="sr-only">{preset.name}</span>
+                                    </Button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {state.backgroundType === 'solid' && (
+                              <div className="space-y-2">
+                                <h4 className="font-medium leading-none">Solid Color</h4>
+                                <div className="flex items-center space-x-2">
+                                  <Input
+                                    type="color"
+                                    value={state.solidColor}
+                                    onChange={(e) => handleBackgroundChange('solidColor', e.target.value)}
+                                    className="w-10 h-10 p-0 border-none"
+                                  />
+                                  <Input
+                                    type="text"
+                                    value={state.solidColor}
+                                    onChange={(e) => handleBackgroundChange('solidColor', e.target.value)}
+                                    className="flex-grow"
+                                    placeholder="#000000"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {state.backgroundType === 'gradient' && (
+                              <div className="space-y-4">
+                                <div className="space-y-2">
+                                  <h4 className="font-medium leading-none">Gradient Color 1</h4>
+                                  <div className="flex items-center space-x-2">
+                                    <Input
+                                      type="color"
+                                      value={state.gradientColor1}
+                                      onChange={(e) => handleBackgroundChange('gradientColor1', e.target.value)}
+                                      className="w-10 h-10 p-0 border-none"
+                                    />
+                                    <Input
+                                      type="text"
+                                      value={state.gradientColor1}
+                                      onChange={(e) => handleBackgroundChange('gradientColor1', e.target.value)}
+                                      className="flex-grow"
+                                      placeholder="#000000"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="space-y-2">
+                                  <h4 className="font-medium leading-none">Gradient Color 2</h4>
+                                  <div className="flex items-center space-x-2">
+                                    <Input
+                                      type="color"
+                                      value={state.gradientColor2}
+                                      onChange={(e) => handleBackgroundChange('gradientColor2', e.target.value)}
+                                      className="w-10 h-10 p-0 border-none"
+                                    />
+                                    <Input
+                                      type="text"
+                                      value={state.gradientColor2}
+                                      onChange={(e) => handleBackgroundChange('gradientColor2', e.target.value)}
+                                      className="flex-grow"
+                                      placeholder="#000000"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="space-y-2">
+                                  <h4 className="font-medium leading-none">Gradient Direction</h4>
+                                  <Select
+                                    value={state.gradientDirection}
+                                    onValueChange={(value) => handleBackgroundChange('gradientDirection', value)}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select direction" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="to right">Horizontal</SelectItem>
+                                      <SelectItem value="to bottom">Vertical</SelectItem>
+                                      <SelectItem value="to bottom right">Diagonal</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            )}
+
+                            <div className="space-y-2">
+                              <h4 className="font-medium leading-none">Opacity</h4>
+                              <Slider
+                                value={[state.backgroundOpacity]}
+                                min={0}
+                                max={1}
+                                step={0.01}
+                                onValueChange={([value]) => handleBackgroundChange('backgroundOpacity', value)}
+                              />
+                            </div>
+
+                            <div className="space-y-2">
+                              <h4 className="font-medium leading-none">Blur</h4>
+                              <Slider
+                                value={[state.backgroundBlur]}
+                                min={0}
+                                max={20}
+                                step={1}
+                                onValueChange={([value]) => handleBackgroundChange('backgroundBlur', value)}
+                              />
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Switch
+                                id="show-background"
+                                checked={state.showBackground}
+                                onCheckedChange={(checked) => handleBackgroundChange('showBackground', checked)}
+                              />
+                              <Label htmlFor="show-background">Show background</Label>
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="dark-mode"
+                          checked={state.isDarkMode}
+                          onCheckedChange={(checked) => handleInputChange('isDarkMode', checked)}
+                        />
+                        <Label htmlFor="dark-mode">Dark mode</Label>
+                      </div>
+                    </div>
+
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className="flex items-center space-x-2">
-                          <div
-                            className="w-4 h-4 rounded-full"
-                            style={{ background: state.backgroundColor }}
-                          />
-                          <span>Background</span>
+                        <Button variant="outline">
+                          Export as
+                          <ChevronDown className="ml-2 h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="grid gap-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium leading-none">Background Type</h4>
-                            <Select
-                              value={state.backgroundType}
-                              onValueChange={(value) => handleBackgroundChange('backgroundType', value)}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select background type" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="preset">Preset</SelectItem>
-                                <SelectItem value="solid">Solid Color</SelectItem>
-                                <SelectItem value="gradient">Gradient</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          {state.backgroundType === 'preset' && (
-                            <div className="space-y-2">
-                              <h4 className="font-medium leading-none">Presets</h4>
-                              <div className="grid grid-cols-2 gap-2">
-                                {backgroundPresets.map((preset) => (
-                                  <Button
-                                    key={preset.name}
-                                    variant="outline"
-                                    className="h-12 w-full"
-                                    style={{ background: preset.value }}
-                                    onClick={() => handleBackgroundChange('backgroundColor', preset.value)}
-                                  >
-                                    <span className="sr-only">{preset.name}</span>
-                                  </Button>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {state.backgroundType === 'solid' && (
-                            <div className="space-y-2">
-                              <h4 className="font-medium leading-none">Solid Color</h4>
-                              <div className="flex items-center space-x-2">
-                                <Input
-                                  type="color"
-                                  value={state.solidColor}
-                                  onChange={(e) => handleBackgroundChange('solidColor', e.target.value)}
-                                  className="w-10 h-10 p-0 border-none"
-                                />
-                                <Input
-                                  type="text"
-                                  value={state.solidColor}
-                                  onChange={(e) => handleBackgroundChange('solidColor', e.target.value)}
-                                  className="flex-grow"
-                                  placeholder="#000000"
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {state.backgroundType === 'gradient' && (
-                            <div className="space-y-4">
-                              <div className="space-y-2">
-                                <h4 className="font-medium leading-none">Gradient Color 1</h4>
-                                <div className="flex items-center space-x-2">
-                                  <Input
-                                    type="color"
-                                    value={state.gradientColor1}
-                                    onChange={(e) => handleBackgroundChange('gradientColor1', e.target.value)}
-                                    className="w-10 h-10 p-0 border-none"
-                                  />
-                                  <Input
-                                    type="text"
-                                    value={state.gradientColor1}
-                                    onChange={(e) => handleBackgroundChange('gradientColor1', e.target.value)}
-                                    className="flex-grow"
-                                    placeholder="#000000"
-                                  />
-                                </div>
-                              </div>
-                              <div className="space-y-2">
-                                <h4 className="font-medium leading-none">Gradient Color 2</h4>
-                                <div className="flex items-center space-x-2">
-                                  <Input
-                                    type="color"
-                                    value={state.gradientColor2}
-                                    onChange={(e) => handleBackgroundChange('gradientColor2', e.target.value)}
-                                    className="w-10 h-10 p-0 border-none"
-                                  />
-                                  <Input
-                                    type="text"
-                                    value={state.gradientColor2}
-                                    onChange={(e) => handleBackgroundChange('gradientColor2', e.target.value)}
-                                    className="flex-grow"
-                                    placeholder="#000000"
-                                  />
-                                </div>
-                              </div>
-                              <div className="space-y-2">
-                                <h4 className="font-medium leading-none">Gradient Direction</h4>
-                                <Select
-                                  value={state.gradientDirection}
-                                  onValueChange={(value) => handleBackgroundChange('gradientDirection', value)}
-                                >
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select direction" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="to right">Horizontal</SelectItem>
-                                    <SelectItem value="to bottom">Vertical</SelectItem>
-                                    <SelectItem value="to bottom right">Diagonal</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="space-y-2">
-                            <h4 className="font-medium leading-none">Opacity</h4>
-                            <Slider
-                              value={[state.backgroundOpacity]}
-                              min={0}
-                              max={1}
-                              step={0.01}
-                              onValueChange={([value]) => handleBackgroundChange('backgroundOpacity', value)}
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <h4 className="font-medium leading-none">Blur</h4>
-                            <Slider
-                              value={[state.backgroundBlur]}
-                              min={0}
-                              max={20}
-                              step={1}
-                              onValueChange={([value]) => handleBackgroundChange('backgroundBlur', value)}
-                            />
-                          </div>
-
-                          <div className="flex items-center space-x-2">
-                            <Switch
-                              id="show-background"
-                              checked={state.showBackground}
-                              onCheckedChange={(checked) => handleBackgroundChange('showBackground', checked)}
-                            />
-                            <Label htmlFor="show-background">Show background</Label>
-                          </div>
+                      <PopoverContent className="p-2 w-auto" align="end" side="top">
+                        <div className="flex flex-col">
+                          <button className="text-left p-2" onClick={() => exportTweet('png')}>
+                            PNG
+                          </button>
+                          <button className="text-left p-2" onClick={() => exportTweet('jpg')}>
+                            JPG
+                          </button>
                         </div>
                       </PopoverContent>
                     </Popover>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="dark-mode"
-                        checked={state.isDarkMode}
-                        onCheckedChange={(checked) => handleInputChange('isDarkMode', checked)}
-                      />
-                      <Label htmlFor="dark-mode">Dark mode</Label>
-                    </div>
                   </div>
-
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline">
-                        Export as
-                        <ChevronDown className="ml-2 h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-2 w-auto" align="end" side="top">
-                      <div className="flex flex-col">
-                        <button className="text-left p-2" onClick={() => exportTweet('png')}>
-                          PNG
-                        </button>
-                        <button className="text-left p-2" onClick={() => exportTweet('jpg')}>
-                          JPG
-                        </button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              )}
-            </div>
-          </Tabs>
-        </div>
-      </main>
-      <footer className="bg-background border-t">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-muted-foreground text-sm">
-            © 2024 <a href="https://mohamedkhire.vercel.app/" className="hover:underline">Mohamed Khire</a>. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+                )}
+              </div>
+            </Tabs>
+          </div>
+        </main>
+        <footer className="bg-background border-t">
+          <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <p className="text-center text-muted-foreground text-sm">
+              © 2024 <a href="https://mohamedkhire.vercel.app/" className="hover:underline">Mohamed Khire</a>. All rights reserved.
+            </p>
+          </div>
+        </footer>
+      </div>
     </>
   )
 }

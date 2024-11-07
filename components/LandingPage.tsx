@@ -9,19 +9,21 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>Fake Tweet - Create Custom Tweets</title>
-        <meta name="description" content="Create and share custom fake tweets for mockups, presentations, or fun!" />
-        <meta name="keywords" content="fake tweet, custom tweet, tweet generator, social media mockup" />
-        <meta name="author" content="Mohamed Khire" />
-        <meta property="og:title" content="Fake Tweet - Create Custom Tweets" />
-        <meta property="og:description" content="Design and share custom tweets effortlessly. Perfect for mockups, presentations, or just for fun!" />
-        <meta property="og:image" content="URL_of_image_to_represent_the_page" />
-        <meta property="og:url" content="https://yourwebsite.com" />
+        <title>Fake Tweet App - Create Realistic Fake Tweets Easily</title>
+        <meta name="title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta name="description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Fake Tweet - Create Custom Tweets" />
-        <meta name="twitter:description" content="Design and share custom tweets effortlessly. Perfect for mockups, presentations, or just for fun!" />
-        <meta name="twitter:image" content="URL_of_image_to_represent_the_page" />
+        <meta property="og:url" content="https://fake-tweet-app.vercel.app/" />
+        <meta property="og:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta property="og:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+        <meta property="og:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://fake-tweet-app.vercel.app/" />
+        <meta property="twitter:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
+        <meta property="twitter:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
+        <meta property="twitter:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
       </Head>
 
       <div className="min-h-screen flex flex-col">
