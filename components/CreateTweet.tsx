@@ -39,11 +39,11 @@ const initialState = {
   tweetPhoto: "",
   date: new Date(),
   time: { hour: "12", minute: "00", period: "AM" },
-  views: "",
-  replies: "",
-  retweets: "",
-  likes: "",
-  bookmarks: "",
+  views: 0,  // Change to number
+  replies: 0,  // Change to number
+  retweets: 0,  // Change to number
+  likes: 0,  // Change to number
+  bookmarks: 0,  // Change to number
   isDarkMode: false,
   backgroundColor: "linear-gradient(to bottom right, #4F46E5, #7C3AED)",
   showBackground: true,
@@ -106,8 +106,8 @@ export default function CreateTweet() {
       <header className="bg-white border-b">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-              
+            <div className="flex items-center">
+
               <span className="ml-2 text-2xl font-bold text-purple-600">Fake Tweet</span>
             </div>
             <Link href="/" className="flex items-center">
@@ -132,10 +132,10 @@ export default function CreateTweet() {
 
             <div className="mt-4">
               {/* Export wrapper with background */}
-              <div 
-                ref={exportRef} 
+              <div
+                ref={exportRef}
                 className="rounded-xl p-4 sm:p-8 md:p-16"
-                style={{ 
+                style={{
                   background: state.showBackground ? state.backgroundColor : 'transparent',
                   maxWidth: '600px',
                   margin: '0 auto'
@@ -161,23 +161,23 @@ export default function CreateTweet() {
                       <div className="flex-1 min-w-0">
                         {state.activeTab === "edit" ? (
                           <div className="space-y-2">
-                            <Input 
-                              value={state.name} 
-                              onChange={(e) => handleInputChange('name', e.target.value)} 
-                              className="font-bold" 
+                            <Input
+                              value={state.name}
+                              onChange={(e) => handleInputChange('name', e.target.value)}
+                              className="font-bold"
                               placeholder="Your name"
                             />
                             <div className="flex items-center space-x-2">
-                              <Input 
-                                value={state.username} 
-                                onChange={(e) => handleInputChange('username', e.target.value)} 
-                                className="text-gray-500" 
+                              <Input
+                                value={state.username}
+                                onChange={(e) => handleInputChange('username', e.target.value)}
+                                className="text-gray-500"
                                 placeholder="Your username"
                               />
                               <div className="flex items-center space-x-2">
-                                <Switch 
-                                  checked={state.isVerified} 
-                                  onCheckedChange={(checked) => handleInputChange('isVerified', checked)} 
+                                <Switch
+                                  checked={state.isVerified}
+                                  onCheckedChange={(checked) => handleInputChange('isVerified', checked)}
                                   id="verified"
                                 />
                                 <Label htmlFor="verified">Verified</Label>
@@ -191,7 +191,7 @@ export default function CreateTweet() {
                             <div className="text-gray-500">@{state.username || 'username'}</div>
                           </div>
                         )}
-                        
+
                         {state.activeTab === "edit" ? (
                           <textarea
                             className="w-full mt-2 bg-transparent resize-none focus:outline-none"
@@ -281,17 +281,17 @@ export default function CreateTweet() {
                                 </SelectContent>
                               </Select>
                             </div>
-                            <Input 
-                              type="number" 
-                              value={state.views} 
-                              onChange={(e) => handleInputChange('views', e.target.value)} 
-                              className="w-full" 
-                              placeholder="Number of views"
-                            />
+                            <Input
+  type="number"
+  value={state.views}
+  onChange={(e) => handleInputChange('views', e.target.value)}
+  className="w-full"
+  placeholder="Number of views"
+/>
                           </div>
                         ) : (
                           <div className="mt-2 text-sm text-gray-500">
-                            {formattedTime} · {state.date ? format(state.date, "MMM d, yyyy") : 'Jan 1, 2024'} · {formatNumber(parseInt(state.views) || 0)} Views
+                            {formattedTime} · {state.date ? format(state.date, "MMM d, yyyy") : 'Jan 1, 2024'} · {formatNumber(state.views)} Views
                           </div>
                         )}
 
@@ -303,17 +303,27 @@ export default function CreateTweet() {
                               {stat === "likes" && <Heart className="w-4 h-4" />}
                               {stat === "bookmarks" && <Bookmark className="w-4 h-4" />}
                               {state.activeTab === "edit" ? (
-                                <Input
-                                  type="number"
-                                  value={state[stat as keyof typeof state]}
-                                  onChange={(e) => handleInputChange(stat, e.target.value)}
-                                  className="w-12 sm:w-16 text-center"
-                                  placeholder="0"
-                                  style={{ appearance: 'textfield' }}
-                                />
-                              ) : (
-                                <span>{formatNumber(parseInt(state[stat as keyof typeof state] as string) || 0)}</span>
-                              )}
+                               <Input
+                               type="number"
+                               value={
+                                 // نتحقق من النوع بشكل شامل
+                                 typeof state[stat as keyof typeof state] === 'number' ||
+                                 typeof state[stat as keyof typeof state] === 'string' ||
+                                 !isNaN(Number(state[stat as keyof typeof state]))  // تحقق من أن القيمة قابلة للتحويل لرقم
+                                   ? Number(state[stat as keyof typeof state]) // تحويل القيمة لرقم
+                                   : 0 // لو القيمة مش رقم، خليها 0
+                               }
+                               onChange={(e) => handleInputChange(stat, e.target.value)}
+                               className="w-12 sm:w-16 text-center"
+                               placeholder="0"
+                             />
+                              
+
+) : (
+  <span>{formatNumber(Number(state[stat as keyof typeof state]))}</span> // نستخدم `Number` هنا عشان نضمن إن القيمة هتكون رقم
+)}
+
+
                             </div>
                           ))}
                           <Upload className="w-4 h-4" />
@@ -330,8 +340,8 @@ export default function CreateTweet() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button variant="outline" className="flex items-center space-x-2">
-                          <div 
-                            className="w-4 h-4 rounded-full" 
+                          <div
+                            className="w-4 h-4 rounded-full"
                             style={{ background: state.backgroundColor }}
                           />
                           <span>Background</span>
