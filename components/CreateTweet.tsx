@@ -305,15 +305,19 @@ export default function CreateTweet() {
                               {state.activeTab === "edit" ? (
                                 <Input
                                   type="number"
-                                  value={state[stat as keyof typeof state] as number} // Ensure it's treated as a number
-                                  onChange={(e) => handleInputChange(stat, parseInt(e.target.value) || 0)} // Ensure we set it as a number
+                                  value={
+                                    typeof state[stat as keyof typeof state] === 'number' || typeof state[stat as keyof typeof state] === 'string'
+                                      ? state[stat as keyof typeof state]
+                                      : 0 // لو كانت القيمة مش رقمية أو نصية، هنحط 0
+                                  }
+                                  onChange={(e) => handleInputChange(stat, e.target.value)}
                                   className="w-12 sm:w-16 text-center"
                                   placeholder="0"
-                                  style={{ appearance: 'textfield' }}
                                 />
                               ) : (
-                                <span>{formatNumber(state[stat as keyof typeof state] as number)}</span> // Ensure we treat it as a number for formatting
+                                <span>{formatNumber(Number(state[stat as keyof typeof state]))}</span> // نستخدم `Number` هنا عشان نضمن إن القيمة هتكون رقم
                               )}
+
                             </div>
                           ))}
                           <Upload className="w-4 h-4" />
