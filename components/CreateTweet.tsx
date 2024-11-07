@@ -19,7 +19,7 @@ import Image from "next/image"
 import { toPng } from 'html-to-image'
 import { format } from "date-fns"
 import Link from 'next/link'
-import Head from 'next/head'
+
 
 const VerificationBadge = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 22 22" aria-label="Verified account" role="img">
@@ -177,31 +177,13 @@ export default function TweetCreator() {
   const formattedDateTime = state.date ? format(state.date, "MMM d, yyyy 'at' h:mm a") : 'Date and time not set'
 
   return (
-    <>
-      <Head>
-        <title>Fake Tweet App - Create Realistic Fake Tweets Easily</title>
-        <meta name="title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
-        <meta name="description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://fake-tweet-app.vercel.app/" />
-        <meta property="og:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
-        <meta property="og:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
-        <meta property="og:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://fake-tweet-app.vercel.app/" />
-        <meta property="twitter:title" content="Fake Tweet App - Create Realistic Fake Tweets Easily" />
-        <meta property="twitter:description" content="Fake Tweet App lets you generate realistic fake tweets for fun, memes, and social media mockups. Customize text, username, and more!" />
-        <meta property="twitter:image" content="https://i.ibb.co/Q9GvDfQ/faketweet.png" />
-      </Head>
 
       <div className={`min-h-screen flex flex-col`}>
         <header className="bg-white border-b">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <span className="ml-2 text-2xl font-bold text-dark-600">Fake Tweet</span>
+              <a href="/"><span className="ml-2 text-2xl font-bold text-dark-600">Fake Tweet</span></a>
               </div>
               <div className="flex items-center space-x-4">
                 <DropdownMenu>
@@ -223,7 +205,7 @@ export default function TweetCreator() {
                     </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <a href="https://mohamedkhire.vercel.app/"><Button variant="outline">Contact</Button></a>
+                <a href="https://mohamedkhire.vercel.app/" target="_blank"><Button variant="outline">Contact</Button></a>
               </div>
             </div>
           </nav>
@@ -721,6 +703,6 @@ export default function TweetCreator() {
           </div>
         </footer>
       </div>
-    </>
+
   )
 }
