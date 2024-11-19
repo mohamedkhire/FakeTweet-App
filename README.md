@@ -19,12 +19,12 @@
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/mohamedkhire/fake-tweet-app.git
+    git clone https://github.com/mohamedkhire/FakeTweet-App.git
     ```
 
 2. Install dependencies (if any):
     ```bash
-    cd fake-tweet-app
+    cd FakeTweet-App
     npm install
     ```
 
