@@ -1,5 +1,7 @@
 {
-    "name": "twtu",
+    "name": "fake-tweet-app",
+    "author": "Mohamed Khire",
+    "homepage": "https://mohamedkhire.vercel.app/",
     "version": "0.1.0",
     "private": true,
     "scripts": {

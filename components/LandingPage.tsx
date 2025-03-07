@@ -1,8 +1,27 @@
+/*
+ * Project: FakeTweet App
+ * Author: Mohamed Khire
+ * Date: DEC 2024
+ * Description: A fun app built with React and Next.js that allows users to generate realistic-looking fake tweets.
+ * GitHub: https://github.com/mohamedkhire
+ * Live: https://fake-tweet-app.vercel.app/
+ */
+
+
+/*
+ * Project: FakeTweet App
+ * Author: Mohamed Khire
+ * Date: Mar 2025
+ * Description: A fun app built with React and Next.js that allows users to generate realistic-looking fake tweets.
+ * GitHub: https://github.com/mohamedkhire
+ * Live: https://faketweet-app.vercel.app/
+ */
+
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { ChevronDown, MessageCircle } from 'lucide-react'
+import { ChevronDown, MessageCircle, Info } from 'lucide-react'
 import Head from 'next/head'
 
 export default function LandingPage() {
@@ -17,25 +36,28 @@ export default function LandingPage() {
                <a href="/"><span className="ml-2 text-2xl font-bold text-dark-600">Fake Tweet</span></a> 
               </div>
               <div className="flex items-center space-x-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="hidden sm:inline-flex items-center">
-                      Product
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-80">
-                    <div className="flex items-start space-x-3 p-2">
-                      <div className="rounded-full bg-purple-100 p-2">
-                        <MessageCircle className="h-5 w-5 text-purple-600" />
+                 <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="hidden sm:inline-flex items-center">
+                        Product
+                        <Info className="ml-1 h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-80">
+                      <div className="flex items-start space-x-3 p-2">
+                        <div className="rounded-full bg-dark-100 p-2">
+                          <MessageCircle className="h-5 w-5 text-dark-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Fake Tweet</h3>
+                          <p className="text-sm text-muted-foreground">Create your own fake tweet with just a snap of finger</p>
+                          <p className="text-sm text-muted-foreground mt-2">
+                            Developed by: <a href="https://mohamedkhire.vercel.app/" target="_blank" rel="noopener noreferrer" className="underline">Mohamed Khire</a>
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold">Fake Tweet</h3>
-                        <p className="text-sm text-muted-foreground">Create your own fake tweet with just a snap of finger</p>
-                      </div>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 <a href="https://mohamedkhire.vercel.app/" target='_blank'><Button variant="outline">Contact</Button></a> 
               </div>
             </div>
@@ -65,7 +87,7 @@ export default function LandingPage() {
         <footer className="bg-white border-t">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <p className="text-center text-gray-500 text-sm">
-              © 2024 <a href="https://mohamedkhire.vercel.app/">Mohamed Khire.</a> All rights reserved.
+            Made with 🖤 by  <a href="https://mohamedkhire.vercel.app/" className="hover:underline">Mohamed Khire</a>
             </p>
           </div>
         </footer>
